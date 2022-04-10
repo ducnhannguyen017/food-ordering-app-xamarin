@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             Size="300,400"
+             x:Class="FoodOrderingApp.Views.PaymentPopup">
+    <StackLayout Padding="10">
+        <Image Source="visa_mastercard.png"  Margin="0,0,0,20"/>
+        <Entry Placeholder="Card Number"/>
+        <Entry Placeholder="Month"/>
+        <Entry Placeholder="Year"/>
+        <Entry Placeholder="Card CVV"/>
+        <Button Text="Pay" Clicked="Pay_Clicked"/>
+    </StackLayout>
+</xct:Popup>

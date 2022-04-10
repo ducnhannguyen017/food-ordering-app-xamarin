@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:FoodOrderingApp.Views.Admin"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Name="CategoryPageName"
+             x:Class="FoodOrderingApp.Views.Admin.CategoryPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <pages:HeaderAdminPage/>
+            <xct:TabView
+                x:Name="tabView"
+                TabStripPlacement="Bottom"
+                TabStripBackgroundColor="{StaticResource colorOrange}"
+                TabStripHeight="60"
+                SelectedIndex="{Binding SelectedIndex}"
+                TabIndicatorColor="Black"
+                TabContentBackgroundColor="Black">
+                <xct:TabViewItem
+                    x:Name="tab1tab1"
+                    Text="Category"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    VerticalOptions="Center"
+                    FontSize="15">
+                    <Grid 
+                        BackgroundColor="{StaticResource colorGrayE0}">
+                        <Grid BackgroundColor="LightGray" RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <CollectionView x:Name="listCategories"
+                    Grid.Row="2" Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+			SelectionMode= "None" ItemsSource = "{Binding Categories}" >
+                                <CollectionView.Header>
+                                    <Label Text="Category" TextColor="Black" FontSize="18" FontAttributes="Bold"/>
+                                </CollectionView.Header>
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <pancake:PancakeView HeightRequest="150">
+                                            <Grid BackgroundColor="White">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="3*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="{Binding image}" Margin="15,20,0,0"
+                                                       HeightRequest="150"
+                                                       WidthRequest="200"
+                                                       HorizontalOptions="Center"  VerticalOptions="EndAndExpand"/>
+                                                <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="10">
+                                                    <Label Text="Name:"/>
+                                                    <Label Text="{Binding name}" TextColor="Black" FontSize="20"/>
+                                                </StackLayout>
+
+                                                <Image Grid.Column="2" 
+                                                        Margin="0,0,15,15"
+                                                        VerticalOptions="End"
+                                                        Source="bin.png" 
+                                                        WidthRequest="25">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="DeleteCategory" CommandParameter="{Binding id}"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                                <Label FontSize="18" FontAttributes="Bold" Margin="10,5" Text="{Binding id, StringFormat='ID : {0}'}" />
+
+                                            </Grid>
+                                            <pancake:PancakeView.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.SelectCategoryCommand, Source={x:Reference listCategories}}"
+                                                   CommandParameter="{Binding .}"
+                                                   NumberOfTapsRequired="1" />
+                                            </pancake:PancakeView.GestureRecognizers>
+                                        </pancake:PancakeView>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </Grid>
+                </xct:TabViewItem>
+
+                <xct:TabViewItem
+                    Text="Add"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    VerticalOptions="Center"
+                    FontSize="15">
+                    <Grid BackgroundColor="{StaticResource colorGrayE0}">
+                        <Grid BackgroundColor="LightGray" Padding="30">
+                            <StackLayout>
+                                <Label TextColor="Black" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       Margin="0,0,0,15"
+                                       Text="Add Category"></Label>
+
+                                <Entry x:Name="nameAdd" Placeholder="Name"/>
+                                <Entry x:Name="descriptionAdd"  Placeholder="Description"/>
+                                <Grid Margin="0,15,0,15" ColumnDefinitions="auto,auto">
+                                    <Label Grid.Column="0" FontSize="20" Text="Image :"/>
+                                    <Button Grid.Column="1" Clicked="UploadImage" Text="Upload Image" TextColor="Black" BackgroundColor="{StaticResource colorWhite}" CornerRadius="10"/>
+                                </Grid>
+                                <Image HeightRequest="250" x:Name="imageAdd"/>
+                                <!--<Entry x:Name="imageAdd" Placeholder="Image"/>-->
+                                <Button Margin="0,0,0,0" Clicked="AddCategory" Text="Add" TextColor="White" BackgroundColor="{StaticResource colorOrange}" CornerRadius="10"/>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                </xct:TabViewItem>
+                
+                <xct:TabViewItem
+                    Text="Update"
+                    TabTapped="ClickUpdateTabView"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    VerticalOptions="Center"
+                    FontSize="15">
+                    <Grid BackgroundColor="{StaticResource colorGrayE0}">
+                        <Grid BackgroundColor="LightGray" Padding="30">
+                            <StackLayout>
+                                <Label TextColor="Black" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       Margin="0,0,0,15"
+                                       Text="Update Category"></Label>
+                                <Entry Text="{Binding IdUpdate}" x:Name="idUpdate" Placeholder="ID"/>
+                                <Entry Text="{Binding NameUpdate}" x:Name="nameUpdate" Placeholder="Name"/>
+                                <Entry Text="{Binding DescriptionUpdate}" x:Name="descriptionUpdate" Placeholder="Description"/>
+                                <Grid Margin="0,15,0,0" ColumnDefinitions="auto,auto">
+                                    <Label Grid.Column="0" FontSize="20" Text="Image :"/>
+                                    <Button Grid.Column="1" Clicked="UploadImage" Text="Upload Image" TextColor="Black" BackgroundColor="{StaticResource colorWhite}" CornerRadius="10"/>
+                                </Grid>
+                                <Image HeightRequest="250" x:Name="imageUpdate"/>
+                                <Entry IsVisible="false"  Text="{Binding ImageUpdate}" x:Name="imageUpdateLink" Placeholder="Image"/>
+                                <Button Margin="0,0,0,0" Clicked="UpdateCategory" Text="Update" TextColor="White" BackgroundColor="{StaticResource colorOrange}" CornerRadius="10"/>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                </xct:TabViewItem>
+            </xct:TabView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

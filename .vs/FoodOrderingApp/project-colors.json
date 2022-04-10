@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "f36132d4-180a-4173-b55b-00977d3cbe0c": {
+      "ProjectGuid": "f36132d4-180a-4173-b55b-00977d3cbe0c",
+      "DisplayName": "FoodOrderingApp",
+      "ColorIndex": 0
+    },
+    "6779b827-6919-42d6-8ace-bec05a8bf744": {
+      "ProjectGuid": "6779b827-6919-42d6-8ace-bec05a8bf744",
+      "DisplayName": "FoodOrderingApp.Android",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

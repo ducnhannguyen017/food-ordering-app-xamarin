@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:pages="clr-namespace:FoodOrderingApp.Views.Admin"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="FoodOrderingApp.Views.Admin.OrderPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <pages:HeaderAdminPage/>
+            <xct:TabView
+                x:Name="tabView"
+                TabStripPlacement="Bottom"
+                TabStripBackgroundColor="{StaticResource colorOrange}"
+                TabStripHeight="60"
+                SelectedIndex="{Binding SelectedIndex}"
+                TabIndicatorColor="Black"
+                TabContentBackgroundColor="Black">
+                <xct:TabViewItem
+                    Text="Order"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    VerticalOptions="Center"
+                    FontSize="15">
+                    <Grid BackgroundColor="{StaticResource colorGrayE0}">
+                        <Grid BackgroundColor="LightGray" RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <CollectionView x:Name="listCategories"
+                    Grid.Row="2" Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+			SelectionMode= "None" ItemsSource = "{Binding OrderData}" >
+                                <CollectionView.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="4*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="Order" TextColor="Black" FontSize="18" FontAttributes="Bold"/>
+                                        <Grid Grid.Column="1" ColumnDefinitions="auto,auto">
+                                            <RadioButton CheckedChanged="orderCheckedChanged" x:Name="confirmedRadioButton" Content="Confirmed"  Grid.Column="0" Margin="0,0,15,0"/>
+                                            <RadioButton CheckedChanged="orderCheckedChanged" x:Name="waitingRadioButton" Content="Waiting" IsChecked="true" Grid.Column="1" />
+                                        </Grid>
+                                    </Grid>
+                                </CollectionView.Header>
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <pancake:PancakeView>
+                                            <Grid BackgroundColor="White">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Source="confirm_order.png" Margin="15,20,0,0"
+                                                                       HeightRequest="150"
+                                                                       WidthRequest="200"
+                                                                       HorizontalOptions="Center"  VerticalOptions="EndAndExpand">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="ConfirmOrder" CommandParameter="{Binding id}"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                                <StackLayout Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="Start" VerticalOptions="Center" Margin="10">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Name:"/>
+                                                        <Label Grid.Column="1" Text="{Binding user.fullname, StringFormat='{0}'}" TextColor="Black" />
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Email:"/>
+                                                        <Label Grid.Column="1" Text="{Binding user.email}" TextColor="Black" />
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Address:"/>
+                                                        <Label Grid.Column="1" Text="{Binding address}" TextColor="Black"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Phone:"/>
+                                                        <Label Grid.Column="1" Text="{Binding user.phone}" TextColor="Black" />
+                                                    </Grid>
+                                                    <Grid RowDefinitions="auto,auto">
+                                                        <Label Grid.Row="0" Text="Created At:"/>
+                                                        <Label Grid.Row="1" Text="{Binding createdAt}" TextColor="Black" />
+                                                    </Grid>
+                                                </StackLayout>
+                                                <Label Grid.Column="2" FontSize="18" FontAttributes="Bold" Margin="10,5" Text="{Binding id, StringFormat='ID : {0}'}" />
+                                            </Grid>
+
+                                            <pancake:PancakeView.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.SelectOrderCommand, Source={x:Reference listCategories}}"
+                                                   CommandParameter="{Binding .}"
+                                                   NumberOfTapsRequired="1" />
+                                            </pancake:PancakeView.GestureRecognizers>
+                                        </pancake:PancakeView>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </Grid>
+                </xct:TabViewItem>
+                <xct:TabViewItem
+                    Text="Food"
+                    FontAttributes="Bold"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    VerticalOptions="Center"
+                    FontSize="15">
+                    <Grid 
+                        BackgroundColor="{StaticResource colorGrayE0}">
+                        <Grid BackgroundColor="LightGray" RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <CollectionView
+                    Grid.Row="2" Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+			SelectionMode= "None" ItemsSource = "{Binding Orders}" >
+                                <CollectionView.Header>
+                                    <Label Grid.Column="0" Text="Food" 
+                                            TextColor="Black" FontSize="18" 
+                                            FontAttributes="Bold"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"/>
+                                </CollectionView.Header>
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <pancake:PancakeView >
+                                            <Grid BackgroundColor="White">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="5*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="{Binding food.image}" Margin="15,20,0,0"
+                                                       HeightRequest="150"
+                                                       WidthRequest="200"
+                                                       HorizontalOptions="Center"  VerticalOptions="EndAndExpand"/>
+                                                <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="10,0,0,0">
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Name:"/>
+                                                        <Label Grid.Column="1" Text="{Binding food.name}" TextColor="Black" FontSize="16"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Description:" />
+                                                        <Label Grid.Column="1" LineBreakMode="TailTruncation" Text="{Binding food.description}" TextColor="Black" FontSize="16"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Quantity:"/>
+                                                        <Label Grid.Column="1" Text="{Binding quantity}" TextColor="Black" FontSize="16"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Price:"/>
+                                                        <Label Grid.Column="1" Text="{Binding price}" TextColor="Black" FontSize="16"/>
+                                                    </Grid>
+                                                    <Grid ColumnDefinitions="auto,auto">
+                                                        <Label Grid.Column="0" Text="Created At:"/>
+                                                        <Label Grid.Column="1" Text="{Binding createdAt}" TextColor="Black" FontSize="16"/>
+                                                    </Grid>
+                                                </StackLayout>
+                                                <Label FontSize="18" FontAttributes="Bold" Margin="10,5" Text="{Binding id, StringFormat='ID : {0}'}" />
+
+                                            </Grid>
+                                        </pancake:PancakeView>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </Grid>
+                </xct:TabViewItem>
+            </xct:TabView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

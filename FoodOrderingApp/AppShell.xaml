@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:FoodOrderingApp.Views"
+       Title="FoodOrderingApp"
+       FlowDirection="RightToLeft"
+       
+       x:Class="FoodOrderingApp.AppShell">
+
+    <!--<FlyoutItem Title="HomeaPage" Icon="favourite.png">
+        <ShellContent Route="HomePage" ContentTemplate="{DataTemplate local:HomePage}" />
+    </FlyoutItem>-->
+    <FlyoutItem Title="FavouritePage" Icon="favourite.png">
+        <ShellContent Route="FavouritePage" ContentTemplate="{DataTemplate local:AboutPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="FavouritePage" Icon="favourite.png">
+        <ShellContent Route="FavouritePage" ContentTemplate="{DataTemplate local:FavouritePage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="CartPage" Icon="cart.jpg">
+        <ShellContent Route="CartPage" ContentTemplate="{DataTemplate local:CartPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="SearchPage" Icon="search..jpg">
+        <ShellContent Route="SearchPage" ContentTemplate="{DataTemplate local:SearchPage}" />
+    </FlyoutItem>
+
+    <!--<MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
+    </MenuItem>
+    <TabBar>
+        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
+    </TabBar>-->
+
+</Shell>

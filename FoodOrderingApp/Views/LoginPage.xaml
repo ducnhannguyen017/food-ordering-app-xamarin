@@ -1,0 +1,42 @@
+﻿<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodOrderingApp.Views.LoginPage"
+            NavigationPage.HasNavigationBar="False"
+            BarBackgroundColor="{StaticResource colorOrange}">
+  <!--Pages can be added as references or inline-->
+    <ContentPage Title="Log In" IconImageSource="login.png">
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Padding="50">
+            <Image  Margin="0,-50,0,0" Source="my_hunger_logo.jpg" HeightRequest="200" WidthRequest="200"/>
+            <Entry Margin="0,15,0,15" x:Name="userName" Placeholder="Username"/>
+            <Entry Margin="0,15,0,15" x:Name="userPassword" IsPassword="True" Placeholder="Password"/>
+            <Grid ColumnDefinitions="auto,auto">
+                <RadioButton x:Name="salerRadioButton" Content="Saler"  Grid.Column="1" />
+                <RadioButton x:Name="userRadioButton" Content="User" IsChecked="true" Grid.Column="0" Margin="0,0,15,0"/>
+            </Grid>
+           
+            <Button Clicked="LogInClicked" 
+                    WidthRequest="200"
+                    Text="Log in"
+                    BackgroundColor="{StaticResource colorOrange}"
+                    TextColor="White" 
+                    HorizontalOptions="Center" 
+                    CornerRadius="10"
+            />
+        </StackLayout>
+    </ContentPage>
+
+
+    <ContentPage Title="Register" IconImageSource="register.png">
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Center" Padding="50">
+            <Label Text="REGISTRATION" FontSize="Title" HorizontalTextAlignment="Center"/>
+            <Image Source="my_hunger_logo.png" HeightRequest="200" WidthRequest="200"/>
+            <Entry x:Name="registerUsername" Placeholder="Name"/>
+            <Entry x:Name="registerEmail" Placeholder="Email"/>
+            <Entry x:Name="registerPhone" Placeholder="Phone"/>
+            <Entry x:Name="registerFullname" Placeholder="Fullname"/>
+            <Entry x:Name="registerPassword" IsPassword="True" Placeholder="Password"/>
+            <Entry x:Name="registerPasswordVerify" IsPassword="True" Placeholder="Confirm Password"/>
+            <Button Clicked="RegisterClicked" Text="Register" TextColor="White" BackgroundColor="{StaticResource colorOrange}" CornerRadius="10"/>
+        </StackLayout>
+    </ContentPage>
+</TabbedPage>

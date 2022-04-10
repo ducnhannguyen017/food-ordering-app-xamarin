@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extensions="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="FoodOrderingApp.Views.CartPage"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:fonticons="clr-namespace:FoodOrderingApp.Fonts"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+            xmlns:shadows="clr-namespace:Sharpnado.Shades;assembly=Sharpnado.Shadows" 
+             xmlns:vm="clr-namespace:FoodOrderingApp.ViewModels"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="cartpage"
+            mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <vm:CartPageViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid BackgroundColor="LightGray" RowSpacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="30,30,30,0" Grid.Row="0" ColumnDefinitions="auto,auto">
+                        <Label Grid.Column="0" Text="Your Payment"  TextColor="Black" FontSize="18" FontAttributes="Bold"/>
+                        <!--<Button Command="{Binding CreateOrderCommand}" Margin="80,0,0,0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Text="Pay"/>-->
+                    </Grid>
+
+                    <StackLayout Grid.Row="1" Padding="10,0,10,10">
+                        <Image Source="visa_mastercard.png"  Margin="0,0,0,20"/>
+                        <Entry Text="{Binding Address}" Placeholder="Address"/>
+                        <Entry Text="{Binding CardNumber}" Placeholder="Card Number"/>
+                        <Entry Text="{Binding ExpMonth}" Placeholder="Expired Month"/>
+                        <Entry Text="{Binding ExpYear}" Placeholder="Expired Year"/>
+                        <Entry Text="{Binding CardCVV}" Placeholder="Card CVV"/>
+                        <Button Text="Pay" Command="{Binding CreateOrderCommand}"/>
+                    </StackLayout>
+
+                    <Grid Grid.Row="2" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView BackgroundColor="#A0A4C9" Opacity="0.2"/>
+                        <Label Text="Total :" Margin="5,0,0,0" TextColor="#6670CC" FontSize="20"
+                                                       HorizontalOptions="Center" FontAttributes ="Bold" VerticalOptions="Center"/>
+                        <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="10">
+                            <Label Text="{Binding TotalQuantity,StringFormat='Quantity: {0}'}" TextColor="Black" FontSize="20"/>
+                            <Label Text="{Binding TotalPrice, StringFormat='Price: {0} VND'}" TextColor="Black" FontSize="20" Margin="0,0,0,0"/>
+                        </StackLayout>
+                    </Grid>
+                    <CollectionView x:Name="listCategories"
+                        Grid.Row="3" Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+			    SelectionMode= "Single" ItemsSource = "{Binding OrderFood}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <pancake:PancakeView>
+                                    <Frame HasShadow="True" BackgroundColor ="Transparent" VerticalOptions="StartAndExpand"
+                                   HorizontalOptions="FillAndExpand" Padding="0">
+                                        <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                                            <extensions:Expander x:Name="MainExpander" CollapseAnimationLength="500">
+                                                <extensions:Expander.Header>
+                                                    <Grid BackgroundColor="White">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*"/>
+                                                            <ColumnDefinition Width="3*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <BoxView BackgroundColor="#A0A4C9" Opacity="0.2"/>
+                                                        <Label Text="{Binding food.name}" Margin="5,0,0,0" TextColor="#6670CC" FontSize="20"
+                                                           HorizontalOptions="Center" FontAttributes ="Bold" VerticalOptions="Center"/>
+                                                        <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Margin="10">
+                                                            <Label Text="{Binding quantity,StringFormat='Quantity: {0}'}" TextColor="Black" FontSize="20"/>
+                                                            <Label Text="{Binding price, StringFormat='Price: {0} VND'}" TextColor="Black" FontSize="20" Margin="0,0,0,0"/>
+                                                            <Label Text="{Binding createdAt}" TextColor="Black" FontSize="15" Margin="0,0,0,0"/>
+                                                        </StackLayout>
+                                                    </Grid>
+
+                                                </extensions:Expander.Header>
+                                                <Grid RowSpacing="0" HorizontalOptions="FillAndExpand" >
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="2*"/>
+                                                        <RowDefinition Height="1.5*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid x:Name="ImageView" IsVisible="True">
+                                                        <Image HeightRequest="200" Source="{Binding food.image}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    </Grid>
+                                                    <Grid x:Name="DetailsView" Grid.Row="1" BackgroundColor="White" Padding="20" IsVisible="True">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="4*"/>
+                                                            <ColumnDefinition Width="1*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackLayout Grid.Column="0">
+                                                            <Label Text="{Binding food.name,StringFormat='Name: {0}'}" TextColor="Black" FontSize="20" FontAttributes="Bold" Opacity="0.85"/>
+                                                            <Label Text="{Binding food.description, StringFormat='Description: {0}' }" TextColor="Black" FontSize="18" Opacity="0.85"/>
+                                                        </StackLayout>
+                                                        <StackLayout Grid.Column="1" Margin="0,5,0,0">
+                                                            <pancake:PancakeView>
+                                                                <Image
+                                                                    x:Name="increase"
+                                                                Source="plus.jpg"
+                                                                BackgroundColor="White"
+                                                                WidthRequest="18">
+                                                                </Image>
+                                                                <pancake:PancakeView.GestureRecognizers>
+                                                                    <TapGestureRecognizer 
+                                                                        Command="{Binding Path=BindingContext.IncreaseQuantCommand, Source={x:Reference listCategories}}" 
+                                                                        NumberOfTapsRequired="1"
+                                                                        CommandParameter="{Binding .}"/>
+                                                                </pancake:PancakeView.GestureRecognizers>
+                                                            </pancake:PancakeView>
+                                                            <pancake:PancakeView>
+                                                                <Image
+                                                                x:Name="decrease"
+                                                                Source="minus.jpg"
+                                                                WidthRequest="18"
+                                                                BackgroundColor="White">
+                                                                </Image>
+                                                                <pancake:PancakeView.GestureRecognizers>
+                                                                    <TapGestureRecognizer 
+                                                                        Command="{Binding Path=BindingContext.DecreaseQuantCommand, Source={x:Reference listCategories}}" 
+                                                                        NumberOfTapsRequired="1"
+                                                                        CommandParameter="{Binding .}"/>
+                                                                </pancake:PancakeView.GestureRecognizers>
+                                                            </pancake:PancakeView>
+
+                                                        </StackLayout>
+                                                    </Grid>
+
+                                                </Grid>
+                                            </extensions:Expander>
+                                        </Grid>
+                                    </Frame>
+                                    <!--<pancake:PancakeView.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                                        Command="{Binding Path=BindingContext.SelectGroupCommand, Source={x:Reference listCategories}}"
+                                                       CommandParameter="{Binding .}"
+                                                       NumberOfTapsRequired="1" />
+                                    </pancake:PancakeView.GestureRecognizers>-->
+                                </pancake:PancakeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

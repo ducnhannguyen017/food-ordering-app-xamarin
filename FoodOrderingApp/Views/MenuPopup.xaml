@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:xct="http://xamarin.com/schemas/2020/toolkit" 
+           xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+            xmlns:shadows="clr-namespace:Sharpnado.Shades;assembly=Sharpnado.Shadows" 
+           WidthRequest="200"
+           HorizontalOptions="End" 
+           TranslationX="300"
+           xmlns:vm="clr-namespace:FoodOrderingApp.Views"
+             x:Class="FoodOrderingApp.Views.MenuPopup">
+    <!--<xct:Popup.BindingContext>
+        <vm:MenuPopup />
+    </xct:Popup.BindingContext>-->
+        <StackLayout>
+            <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" Padding="15">
+                <Image Grid.Row="0" Source="user.png" 
+                       VerticalOptions="FillAndExpand" 
+                       HorizontalOptions="FillAndExpand" 
+                       HeightRequest="200"></Image>
+                <Label Grid.Row="1" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       Margin="0,15,0,15" FontSize="22" 
+                       Text="{Binding fullname}"></Label>
+                <CollectionView
+                            x:Name="listCategories"
+                            Grid.Row="2"
+                            HorizontalScrollBarVisibility="Never"
+                            ItemsSource="{Binding MenuList}"
+                            SelectionMode="None"
+                            HorizontalOptions="Center">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                            <pancake:PancakeView>
+                                <Grid Grid.Row="2" 
+                                  VerticalOptions="Center"
+                                  Margin="0,15,0,20"
+                                    HorizontalOptions="StartAndExpand"
+                                  ColumnDefinitions="auto,auto">
+                                    <Image 
+                                        Grid.Column="0"
+                                        HeightRequest="30"
+                                        Source="{Binding icon}"
+                                        Margin="70,0,50,0"
+                                        WidthRequest="30"></Image>
+                                    <Label Grid.Column="1"
+                                           FontAttributes="Bold"
+                                           Text="{Binding name}" FontSize="20"></Label>
+                                    <!--<Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="NavigationTapped"/>
+                                    </Grid.GestureRecognizers>-->
+                                </Grid>
+                                <pancake:PancakeView.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                                    Command="{Binding Path=BindingContext.NavigationCommand, Source={x:Reference listCategories}}"
+                                                   CommandParameter="{Binding .}"
+                                                   NumberOfTapsRequired="1" />
+                                </pancake:PancakeView.GestureRecognizers>
+                            </pancake:PancakeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+                
+             
+            </Grid>
+        </StackLayout>
+</xct:Popup>
